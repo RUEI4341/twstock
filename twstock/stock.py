@@ -84,6 +84,9 @@ class TWSEFetcher(BaseFetcher):
         return data
 
     def _make_datatuple(self, data):
+        # TWSE added extra columns after transaction
+        if len(data) > 9:
+            data = data[:9]
         data[0] = datetime.datetime.strptime(self._convert_date(data[0]), "%Y/%m/%d")
         data[1] = int(data[1].replace(",", ""))
         data[2] = int(data[2].replace(",", ""))
